@@ -3,7 +3,7 @@ For this project data from Rechtspraak Open Data is used.
 
 ### Data directory setup
 The data from Rechtspraak Open Data contain folders for each year with XML files that contain the information in the documents.
-To ensure the scripts work on the data, store the files from the downloaded Rechtspraak Open data zip in the following way:
+To ensure the scripts work on the data, create a folder called data and store the files from the downloaded Rechtspraak Open data zip in the following way:
 
 ```commandline
 data/
