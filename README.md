@@ -49,11 +49,11 @@ You can run the script from the command line with different options depending on
 
 - **Full Text Extraction**:
   ```bash
-  python summarization_pipeline.py --method 1 --input path/to/input_file.csv
+  python data_processing_pipeline.py --method 1 --input path/to/input_file.csv
   ```
 - **Header Extraction**:
   ```bash
-  python summarization_pipeline.py --method 2 --input path/to/input_file.csv
+  python data_processing_pipeline.py --method 2 --input path/to/input_file.csv
   ```
   
 ### Output
