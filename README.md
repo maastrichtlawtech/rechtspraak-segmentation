@@ -31,7 +31,7 @@ This script is designed to process legal documents from the Rechtspraak dataset.
 The script uses the following Python libraries:
 - `pandas`: For data manipulation and creating the CSV output.
 - `argparse`: For handling command-line arguments.
-- Custom modules such as `header_extraction`, `full_text_extraction`, and `section_extraction`.
+- Custom modules such as `header_extraction` and `full_text_extraction`.
 
 ### Usage
 
