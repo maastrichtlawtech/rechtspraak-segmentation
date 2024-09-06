@@ -1,0 +1,11 @@
+Ik heb een lijst met juridische onderwerpen die in Nederlandse rechtszaken voorkomen. De juridische onderwerpen zijn als volgt:
+
+- feiten en omstandigheden,
+- eerdere juridische acties en beslissingen (tevens onderscheid tussen gedaagde, appellant en de verschillende juridische instanties zoals rechtbank, hof van beroep etc.),
+- standpunten van appellant,
+- standpunten van verweerder,
+- juridische middelen,
+- beoordeling door rechter/College.
+- proceskosten
+
+Geef mij het onderwerp uit de lijst dat het beste bij de volgende sectie past, geef geen andere tekst op dan de onderwerpnaam:
