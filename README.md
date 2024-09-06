@@ -1,13 +1,22 @@
-# Master Thesis
-## Optimizing Dutch Legal Text Segmentation and Summarization: _A Low-Resource Approach to Enhancing Relevance Extraction in Complex Case Law_
-**Abstract**: _This thesis addresses the complexities inherent in analyzing Dutch legal case law, which is characterized by its voluminous and intricate documentation. The research focuses on developing effective methods for segmenting these legal texts, with a particular emphasis on identifying and extracting relevant information. In the legal context, relevance extends beyond simple topical or lexical similarities, encompassing the intricate legal relationships between entities that form the basis of judicial decisions.
-The study explores various approaches to divide legal documents into coherent sections based on these relevant legal topics. By combining clustering techniques for legal topics and investigating summarization methods for both full documents and segmented documents, this research aims to determine the most efficient strategies for generating accurate and concise summaries.
-A key consideration in this work is the constraint of limited resources, including computational power and high-quality reference summaries. The thesis addresses these challenges, seeking solutions that are effective under such constraints.
-To validate the proposed methodologies, the research employs a comprehensive evaluation framework, incorporating both automated metrics and human expert assessment. The ultimate goal of this work is to enhance the capacity of legal professionals to efficiently extract crucial information from complex legal documents, thereby streamlining their analysis and decision-making processes._
+## Data
+For this project data from Rechtspraak Open Data is used.
 
-**Keywords**: _Dutch legal case law, legal text segmentation, information extraction, low-resource, relevance in legal context, human evaluation_ 
+### Data directory setup
+The data from Rechtspraak Open Data contain folders for each year with XML files that contain the information in the documents.
+To ensure the scripts work on the data, store the files from the downloaded Rechtspraak Open data zip in the following way:
 
----
+```commandline
+data/
+├── creation/
+├── metadata/
+└── raw/
+    ├── 2020/
+    │   └── xml files...
+    ├── 2021/
+    │   └── xml files...
+    └── etc...
+```
+
 ## Data Processing Script for Rechtspraak Case Documents
 
 This script is designed to process legal documents from the Rechtspraak dataset. It extracts useful information such as full text, specific sections, or headers from the documents and saves the processed data into a CSV file. The script leverages different extraction techniques based on the chosen processing method.
