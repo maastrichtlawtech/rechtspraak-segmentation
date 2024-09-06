@@ -24,7 +24,6 @@ This script is designed to process legal documents from the Rechtspraak dataset.
 ### Features
 
 - **Full Text Extraction**: Extracts the entire content of the document, including "procesverloop", "overwegingen", and "beslissing".
-- **Section Extraction**: Extracts and organizes the main sections of the document into separate columns.
 - **Header Extraction**: Extracts headers along with their corresponding sections, providing additional structured data.
 
 ### Dependencies
@@ -42,8 +41,7 @@ You can run the script from the command line with different options depending on
 
 - `--method` (required): Specifies the type of processing method to use.
   - `1`: **Full Text Extraction**: Extracts the full text of the document.
-  - `2`: **Main Section Extraction**: Extracts and organizes the main sections into separate columns.
-  - `3`: **Header Extraction**: Extracts headers and their corresponding sections.
+  - `2`: **Header Extraction**: Extracts headers and their corresponding sections.
 
 - `--input` (required): Specifies the path to the input CSV file containing the document data.
 
