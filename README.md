@@ -71,8 +71,8 @@ This script is designed to cluster legal document data from the Rechtspraak data
 
 - **Header Clustering**: Clusters headers based on seed word groups using TF-IDF and K-Means.
 - **Full Text Clustering**: Clusters the full text of documents using TF-IDF and K-Means based on pre-labeled data.
-- **Section Clustering**:
-  - **Self-Segmentation (Se3)**: Clusters sections using the Se3 self-segmentation method.
+- **Sentence-based Clustering**:
+    - **Self-Segmentation (Se3)**: Clusters sections using the Se3 self-segmentation method.
   - **S-BERT + Spectral Clustering**: Clusters sections using S-BERT embeddings combined with spectral clustering.
 - **LLM-based Clustering**: Clusters sections using a Large Language Model-based approach.
 
