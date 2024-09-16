@@ -3,7 +3,7 @@ import argparse
 import pandas as pd
 from datetime import datetime
 
-import header_extraction, full_text_extraction
+from data_processing import header_extraction, full_text_extraction
 from utils import constants, logger_script
 
 logger = logger_script.get_logger(constants.EXTRACTION_LOGGER_NAME)

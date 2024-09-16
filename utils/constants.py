@@ -1,6 +1,6 @@
 import os
 
-REPO_PATH = "C:\\Users\\Chloe\\PycharmProjects\\case-law-thesis"
+REPO_PATH = ""
 
 EXTRACTION_LOGGER_NAME = 'Extraction Pipeline'
 SEGMENTATION_LOGGER_NAME = 'Segmentation Pipeline'
@@ -11,24 +11,24 @@ SUMMARIZATION_LOGGER_NAME = 'Summarization Pipeline'
 #########################################
 
 # FOLDER PATHS
-DATA_DIR = os.path.join(REPO_PATH, '../data')
+DATA_DIR = os.path.join(REPO_PATH, 'data')
 METADATA_DIR = os.path.join(DATA_DIR, 'metadata')
 RAW_DIR = os.path.join(DATA_DIR, 'raw', '{year}')
-DATA_PROCESSING_DIR = os.path.join(REPO_PATH, '../data_processing')
-SEGMENTATION_DIR = os.path.join(REPO_PATH, '../segmentation')
+DATA_PROCESSING_DIR = os.path.join(REPO_PATH, 'data_processing')
+SEGMENTATION_DIR = os.path.join(REPO_PATH, 'segmentation')
 SEGMENTATION_RESULTS_DIR = os.path.join(SEGMENTATION_DIR, 'results')
 MODEL_DIR = os.path.join(REPO_PATH, '', 'models')
-SUMMARIZATION_DIR = os.path.join(REPO_PATH, '../summarization')
+SUMMARIZATION_DIR = os.path.join(REPO_PATH, 'summarization')
 SUMMARIZATION_RESULTS_DIR = os.path.join(SUMMARIZATION_DIR, 'results')
 
 # FILE PATHS
-MERGE_PATTERNS_PATH = os.path.join(DATA_PROCESSING_DIR, '../data_processing/merge_patterns.txt')
-SPLIT_PATTERNS_PATH = os.path.join(DATA_PROCESSING_DIR, '../data_processing/split_patterns.txt')
+MERGE_PATTERNS_PATH = os.path.join(DATA_PROCESSING_DIR, 'data_processing/merge_patterns.txt')
+SPLIT_PATTERNS_PATH = os.path.join(DATA_PROCESSING_DIR, 'data_processing/split_patterns.txt')
 LABELED_HEADERS_FILE_PATH = os.path.join(METADATA_DIR, 'labeled_headers.csv')
 HEADERS_PATH = os.path.join(METADATA_DIR, 'headers_{year}.csv')
 SECTIONS_PATH = os.path.join(METADATA_DIR, 'sections_{year}.csv')
-LLM_SYS_PROMPT_PATH = os.path.join(SEGMENTATION_DIR, '../segmentation/system_prompt.txt')
-LLM_PROMPT_NL_PATH = os.path.join(SEGMENTATION_DIR, '../segmentation/prompt_nl.txt')
+LLM_SYS_PROMPT_PATH = os.path.join(SEGMENTATION_DIR, 'segmentation/system_prompt.txt')
+LLM_PROMPT_NL_PATH = os.path.join(SEGMENTATION_DIR, 'segmentation/prompt_nl.txt')
 EMBEDDINGS_SAVE_PATH = os.path.join(SEGMENTATION_DIR)
 
 # COLUMNS

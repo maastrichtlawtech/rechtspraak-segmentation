@@ -4,7 +4,7 @@ import argparse
 import pandas as pd
 from datetime import datetime
 
-import tfidf_kmeans, se3, sbert_spectral, llm
+from segmentation import tfidf_kmeans, se3, sbert_spectral, llm
 from utils import constants, logger_script, util_data_loader
 
 warnings.filterwarnings("ignore")
