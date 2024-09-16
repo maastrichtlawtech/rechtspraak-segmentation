@@ -13,3 +13,4 @@ sentence_transformers
 torch
 tqdm
 transformers
+lxml
