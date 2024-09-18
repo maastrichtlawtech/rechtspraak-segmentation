@@ -3,7 +3,7 @@ import argparse
 import pandas as pd
 from datetime import datetime
 
-import header_extraction, full_text_extraction
+import header_extraction, full_text_extraction, section_extraction
 from utils import constants, logger_script
 
 logger = logger_script.get_logger(constants.EXTRACTION_LOGGER_NAME)
@@ -30,6 +30,7 @@ class DataProcessing:
         """
         self.full_text_extractor = full_text_extraction.FullTextExtractor()
         self.header_extractor = header_extraction.HeaderExtractor()
+        self.section_extractor = section_extraction.SectionExtractor()
 
     def data_process_selector(self, method: int, input_path: str):
         """
@@ -44,7 +45,7 @@ class DataProcessing:
         extracted_df = pd.DataFrame()
         method_name = ''
 
-        logger.info("Start header extraction process...")
+        logger.info("Start extraction process...")
         match method:
             case 1:
                 method_name = 'fulltext'
@@ -52,6 +53,9 @@ class DataProcessing:
             case 2:
                 method_name = 'headers'
                 extracted_df = self.header_extractor.extract_headers(input_path)
+            case 3:
+                method_name = 'sections'
+                extracted_df = self.section_extractor.extract_sections(input_path)
 
         if extracted_df is not None and not extracted_df.empty:
             # Generate the current timestamp TODO: change this naming to the year instead of datetime
@@ -73,13 +77,15 @@ if __name__ == '__main__':
     # create the argument parser, add the arguments
     parser = argparse.ArgumentParser(description='Rechtspraak Data Processing',
                                      formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument('--method', type=int, choices=range(1, 3), default=3,
+    parser.add_argument('--method', type=int, choices=range(1, 4), default=3,
                         help=(
                             'Specify processing method (1-3): \n'
                             '1 = Full Text Extraction: creates a dataframe with a column that contains the document '
                             'full text (composed from "procesverloop", "overwegingen", and "beslissing"), \n'
                             '2 = Header Extraction: creates a dataframe with a column that holds a dictionary with '
-                            'section header and section text. '
+                            'section header and section text, \n'
+                            '3 = Section Extraction: creates a dataframe with a column that holds the section numbers '
+                            'and section texts.'
                         ))
     parser.add_argument('--input', type=str, default=constants.RAW_DIR.format(year=2021),
                         help="The path to the input data CSV file")
