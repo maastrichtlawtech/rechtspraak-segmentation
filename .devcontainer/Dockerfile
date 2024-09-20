@@ -19,3 +19,5 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Install ollama
 RUN curl -fsSL https://ollama.com/install.sh | sh
+
+RUN python3 required_downloads.py
