@@ -10,4 +10,4 @@ additional info: "AttributeError: 'list' object has no attribute 'empty'"
 python3 main.py segmentation --method 4 --input data/metadata/fulltext_20240920_125755.csv [PASSED]
 python3 main.py segmentation --method 5 --input [NO VALID FILE DUE ABOVE FAIL]
 
-summarisation is still untested
+summarisation failes all methods asking for "sections" assuming the is data_processing method 3
