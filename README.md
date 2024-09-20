@@ -42,6 +42,7 @@ You can run the script from the command line with different options depending on
 - `--method` (required): Specifies the type of processing method to use.
   - `1`: **Full Text Extraction**: Extracts the full text of the document.
   - `2`: **Header Extraction**: Extracts headers and their corresponding sections.
+  - `3`: **Section Extraction**: Extracts the section by section and subsection.
 
 - `--input` (required): Specifies the path to the input CSV file containing the document data.
 
@@ -49,11 +50,15 @@ You can run the script from the command line with different options depending on
 
 - **Full Text Extraction**:
   ```bash
-  python data_processing_pipeline.py --method 1 --input path/to/input_file.csv
+  python data_processing_pipeline.py --method 1 --input path/to/year/folder
   ```
 - **Header Extraction**:
   ```bash
-  python data_processing_pipeline.py --method 2 --input path/to/input_file.csv
+  python data_processing_pipeline.py --method 2 --input path/to/year/folder
+  ```
+- **Section Extraction**:
+  ```bash
+  python data_processing_pipeline.py --method 3 --input path/to/year/folder
   ```
   
 ### Output
@@ -102,23 +107,23 @@ You can run the script from the command line with different options depending on
 
 - **TF-IDF + K-MEANS with seed words**:
   ```bash
-  python segmentation_pipeline.py --method 1 --input path/to/input_file.csv
+  python segmentation_pipeline.py --method 1 --input path/to/headers/file.csv
   ```
 - **TF-IDF + K-MEANS with labeled data**:
   ```bash
-  python segmentation_pipeline.py --method 2 --input path/to/input_file.csv
+  python segmentation_pipeline.py --method 2 --input path/to/headers/file.csv
   ```
   - **Self-Segmentation (Se3)**:
   ```bash
-  python segmentation_pipeline.py --method 3 --input path/to/input_file.csv
+  python segmentation_pipeline.py --method 3 --input path/to/fulltext/file.csv
   ```
   - **S-BERT + Spectral Clustering**:
   ```bash
-  python segmentation_pipeline.py --method 4 --input path/to/input_file.csv
+  python segmentation_pipeline.py --method 4 --input path/to/fulltext/file.csv
   ```
   - **LLM-based Clustering**:
   ```bash
-  python segmentation_pipeline.py --method 5 --input path/to/input_file.csv
+  python segmentation_pipeline.py --method 5 --input path/to/section/file.csv
   ```
 
 ### Output
