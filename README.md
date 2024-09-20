@@ -24,7 +24,6 @@ This script is designed to process legal documents from the Rechtspraak dataset.
 ### Features
 
 - **Full Text Extraction**: Extracts the entire content of the document, including "procesverloop", "overwegingen", and "beslissing".
-- **Section Extraction**: Extracts and organizes the main sections of the document into separate columns.
 - **Header Extraction**: Extracts headers along with their corresponding sections, providing additional structured data.
 
 ### Dependencies
@@ -32,7 +31,7 @@ This script is designed to process legal documents from the Rechtspraak dataset.
 The script uses the following Python libraries:
 - `pandas`: For data manipulation and creating the CSV output.
 - `argparse`: For handling command-line arguments.
-- Custom modules such as `header_extraction`, `full_text_extraction`, and `section_extraction`.
+- Custom modules such as `header_extraction` and `full_text_extraction`.
 
 ### Usage
 
@@ -42,8 +41,7 @@ You can run the script from the command line with different options depending on
 
 - `--method` (required): Specifies the type of processing method to use.
   - `1`: **Full Text Extraction**: Extracts the full text of the document.
-  - `2`: **Main Section Extraction**: Extracts and organizes the main sections into separate columns.
-  - `3`: **Header Extraction**: Extracts headers and their corresponding sections.
+  - `2`: **Header Extraction**: Extracts headers and their corresponding sections.
 
 - `--input` (required): Specifies the path to the input CSV file containing the document data.
 
@@ -51,11 +49,11 @@ You can run the script from the command line with different options depending on
 
 - **Full Text Extraction**:
   ```bash
-  python summarization_pipeline.py --method 1 --input path/to/input_file.csv
+  python data_processing_pipeline.py --method 1 --input path/to/input_file.csv
   ```
 - **Header Extraction**:
   ```bash
-  python summarization_pipeline.py --method 2 --input path/to/input_file.csv
+  python data_processing_pipeline.py --method 2 --input path/to/input_file.csv
   ```
   
 ### Output
@@ -73,8 +71,8 @@ This script is designed to cluster legal document data from the Rechtspraak data
 
 - **Header Clustering**: Clusters headers based on seed word groups using TF-IDF and K-Means.
 - **Full Text Clustering**: Clusters the full text of documents using TF-IDF and K-Means based on pre-labeled data.
-- **Section Clustering**:
-  - **Self-Segmentation (Se3)**: Clusters sections using the Se3 self-segmentation method.
+- **Sentence-based Clustering**:
+    - **Self-Segmentation (Se3)**: Clusters sections using the Se3 self-segmentation method.
   - **S-BERT + Spectral Clustering**: Clusters sections using S-BERT embeddings combined with spectral clustering.
 - **LLM-based Clustering**: Clusters sections using a Large Language Model-based approach.
 
