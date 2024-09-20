@@ -1,3 +1,6 @@
 data
 *pyc
 logger_files
+
+#exclude segmentation results
+segmentation/results/*.csv

@@ -27,8 +27,8 @@ SPLIT_PATTERNS_PATH = os.path.join(DATA_PROCESSING_DIR, 'data_processing/split_p
 LABELED_HEADERS_FILE_PATH = os.path.join(METADATA_DIR, 'labeled_headers.csv')
 HEADERS_PATH = os.path.join(METADATA_DIR, 'headers_{year}.csv')
 SECTIONS_PATH = os.path.join(METADATA_DIR, 'sections_{year}.csv')
-LLM_SYS_PROMPT_PATH = os.path.join(SEGMENTATION_DIR, 'segmentation/system_prompt.txt')
-LLM_PROMPT_NL_PATH = os.path.join(SEGMENTATION_DIR, 'segmentation/prompt_nl.txt')
+LLM_SYS_PROMPT_PATH = os.path.join(SEGMENTATION_DIR, 'system_prompt.txt')
+LLM_PROMPT_NL_PATH = os.path.join(SEGMENTATION_DIR, 'prompt_nl.txt')
 EMBEDDINGS_SAVE_PATH = os.path.join(SEGMENTATION_DIR)
 
 # COLUMNS

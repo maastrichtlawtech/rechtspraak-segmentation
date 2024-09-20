@@ -21,3 +21,5 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 RUN curl -fsSL https://ollama.com/install.sh | sh
 
 RUN python3 required_downloads.py
+
+CMD ["ollama", "serve"]
