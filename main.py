@@ -17,14 +17,16 @@ if __name__ == '__main__':
     
     # Data Processing pipeline arguments
     dp_parser = subparsers.add_parser('data_processing', help='Run the data processing pipeline')
-    dp_parser.add_argument('--method', type=int, choices=range(1, 3), default=1,
-                           help=(
-                               'Specify processing method (1-2): \n'
-                               '1 = Full Text Extraction: creates a dataframe with a column that contains the document '
-                               'full text (composed from "procesverloop", "overwegingen", and "beslissing"), \n'
-                               '2 = Header Extraction: creates a dataframe with a column that holds a dictionary with '
-                               'section header and section text. '
-                           ))
+    dp_parser.add_argument('--method', type=int, choices=range(1, 4), default=3,
+                        help=(
+                            'Specify processing method (1-3): \n'
+                            '1 = Full Text Extraction: creates a dataframe with a column that contains the document '
+                            'full text (composed from "procesverloop", "overwegingen", and "beslissing"), \n'
+                            '2 = Header Extraction: creates a dataframe with a column that holds a dictionary with '
+                            'section header and section text, \n'
+                            '3 = Section Extraction: creates a dataframe with a column that holds the section numbers '
+                            'and section texts.'
+                        ))
     dp_parser.add_argument('--input', type=str, default=constants.RAW_DIR.format(year=2021),
                            help="The path to the input data CSV file")
     
