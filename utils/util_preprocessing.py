@@ -85,7 +85,10 @@ def create_subset_based_on_proportions(df: pd.DataFrame, subset_size: int = 100)
     :return: A subset DataFrame with proportions reflecting those in the 'instantie' column.
     """
     # Remove rows where 'constants.INHOUD_COL' has NaN values
-    df = df.dropna(subset=[constants.INHOUD_COL])
+    if constants.FULLTEXT_COL in df.columns:
+        df = df.dropna(subset=[constants.INHOUD_COL, constants.FULLTEXT_COL])
+    else:
+        df = df.dropna(subset=[constants.INHOUD_COL])
 
     # Calculate the proportions of each value in the 'instantie' column
     proportions = df[constants.INSTANTIE_COL].value_counts(normalize=True)
@@ -123,6 +126,52 @@ def extract_text_from_sections(df: pd.DataFrame):
     return df['sections'].apply(extract_texts).tolist()
 
 
+def combine_texts_by_label(input_df):
+    """
+    Combines the 'text' field for each class label within each row and stores the combined texts as a list of strings.
+
+    Parameters:
+    input_df (pd.DataFrame): The input dataframe containing the nested dictionaries with 'class' and 'text'.
+
+    Returns:
+    pd.DataFrame: The updated dataframe with a new column 'combined_texts' that contains a list of combined texts per row.
+    """
+
+    # Create a new column to store the combined texts
+    combined_texts_list = []
+
+    # Iterate over the rows in the input dataframe
+    for idx, row in input_df.iterrows():
+        # Extract the 'sections' dictionary
+        sections = row['llm_response']
+
+        # Create a dictionary to hold combined texts for this specific row, per class
+        combined_texts_per_class = {}
+
+        # Loop over the inner dictionaries in 'sections' (e.g., '2', '3', etc.)
+        for key, value in sections.items():
+            # Extract the class label and the text
+            class_label = value['class']
+            text = value['text']
+
+            # Combine the text for each class label within the row
+            if class_label in combined_texts_per_class:
+                combined_texts_per_class[class_label].append(text)
+            else:
+                combined_texts_per_class[class_label] = [text]
+
+        # For each class, join the list of texts into a single string
+        combined_texts_for_row = [' '.join(texts) for texts in combined_texts_per_class.values()]
+
+        # Add the combined texts (as a list) for this row to the list
+        combined_texts_list.append(combined_texts_for_row)
+
+    # Assign the new column to the dataframe
+    input_df['combined_texts'] = combined_texts_list
+
+    return input_df
+
+
 def clean_tokenized(tokenized_text):
     # Extended cleaning to include tabs, multiple newlines, and other whitespace characters
     return [re.sub(r'\s+', ' ', re.sub(r'[^\w\s]|[\d]', '', sentence.lower())).strip() for sentence in tokenized_text]
@@ -132,6 +181,7 @@ def clean_text(text):
     text = text.replace('\n', ' ')
     text = re.sub(" +", " ", text)
     text = re.sub(r' (?<!\S)\d+(\.\d+)+(?!\S) ', '', text)
+    text = re.sub(r'(?<!\S)\d+(\.\d{1})?\.?(?!\S)', '', text)
     text = text.strip()
     return text
 
