@@ -3,7 +3,7 @@ import argparse
 import pandas as pd
 from datetime import datetime
 
-import extractive_summarization, abstractive_summarization
+from summarization import extractive_summarization, abstractive_summarization
 from utils import constants, logger_script, util_data_loader, util_preprocessing
 
 logger = logger_script.get_logger(constants.SUMMARIZATION_LOGGER_NAME)

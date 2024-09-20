@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import segmentation_eval
+from segmentation import segmentation_eval
 
 from typing import List
 from sklearn.cluster import SpectralClustering

@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import segmentation_eval
+from segmentation import segmentation_eval
 
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
