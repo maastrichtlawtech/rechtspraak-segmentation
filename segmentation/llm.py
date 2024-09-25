@@ -1,3 +1,5 @@
+import subprocess
+import time
 import pandas as pd
 import difflib
 import ollama
@@ -38,6 +40,27 @@ class LLMClusterer:
         """Initializes LLMClusterer with the locally stored Llama3.1-8B:instruct models and loads necessary prompts."""
         self.model = 'llama3:instruct'
         self.system_prompt, self.prompt = self.get_prompt()
+        self._ollama_server_init()
+
+    def _ollama_server_init(self):
+        """
+        start the ollama server, via subprocess
+        """
+        # start the ollama server through subprocess, send to background and log output
+        print("starting ollama server...")
+        command = "ollama serve > ollama_serve.log 2>&1 &"
+        subprocess.run(command, shell=True, check=True)
+
+        # wait for the server to start
+        time.sleep(5)
+
+        # load the model through supprocess
+        print("loading model...")
+        command = f"ollama pull {self.model}"
+        process = subprocess.Popen(command, shell=True)
+
+        # Wait for the process to finish
+        process.wait()
 
     @staticmethod
     def get_prompt() -> Tuple[str, str]:
