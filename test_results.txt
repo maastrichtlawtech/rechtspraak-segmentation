@@ -1,7 +1,6 @@
 python3 main.py data_processing --method 1 --input data/raw/2020   [PASSED]
 python3 main.py data_processing --method 2 --input data/raw/2020   [PASSED]
-python3 main.py data_processing --method 3 --input data/raw/2020   [FAILED]
-Additional info: "AttributeError: module 'utils.util_data_loader' has no attribute 'load_txt_file'"
+python3 main.py data_processing --method 3 --input data/raw/2020   [PASSED]
 
 python3 main.py segmentation --method 1 --input data/metadata/headers_20240920_100949.csv  [PASSED]
 python3 main.py segmentation --method 2 --input data/metadata/headers_20240920_100949.csv  [PASSED]

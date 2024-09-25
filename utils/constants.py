@@ -22,8 +22,8 @@ SUMMARIZATION_DIR = os.path.join(REPO_PATH, 'summarization')
 SUMMARIZATION_RESULTS_DIR = os.path.join(SUMMARIZATION_DIR, 'results')
 
 # FILE PATHS
-MERGE_PATTERNS_PATH = os.path.join(DATA_PROCESSING_DIR, 'data_processing/merge_patterns.txt')
-SPLIT_PATTERNS_PATH = os.path.join(DATA_PROCESSING_DIR, 'data_processing/split_patterns.txt')
+MERGE_PATTERNS_PATH = os.path.join(DATA_PROCESSING_DIR, 'merge_patterns.txt')
+SPLIT_PATTERNS_PATH = os.path.join(DATA_PROCESSING_DIR, 'split_patterns.txt')
 LABELED_HEADERS_FILE_PATH = os.path.join(METADATA_DIR, 'labeled_headers.csv')
 HEADERS_PATH = os.path.join(METADATA_DIR, 'headers_{year}.csv')
 SECTIONS_PATH = os.path.join(METADATA_DIR, 'sections_{year}.csv')
