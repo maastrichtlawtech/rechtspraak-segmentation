@@ -73,7 +73,7 @@ class SummarizationPipeline:
                 method_name = 'TextRank'
                 summary_list = self.textrank_summarizer.apply_textrank(text_data, evaluate, n_sent=n_sent)
             case 2:
-                method_name = 'LSA'
+                method_name = 'LSA' ## UNFINISHED
                 summary_list = self.lsa_summarizer.apply_lsa(text_data, evaluate)  # TODO: Fix
             case 3:
                 method_name = 'BART'
