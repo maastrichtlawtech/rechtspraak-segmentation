@@ -80,7 +80,7 @@ class HeaderExtractor:
         # Return the dictionary containing all extracted section data
         return section_data
 
-    def process_xml(self, xml_file: str) -> dict or None:
+    def process_xml(self, xml_file: str) -> [pd.DataFrame, dict or None]:
         """
         Processes a single XML file to extract relevant legal judgement information, including global attributes
         and section-specific data.
@@ -121,10 +121,10 @@ class HeaderExtractor:
                 wetsverwijzing = wetsverwijzing_tag.text
 
             # Extract section-specific information by calling the extract_section_info method
-            section_data = self.extract_section_info(soup)
+            sections = self.extract_section_info(soup)
 
             # If no valid sections are found, log a debug message and skip processing this file
-            if not section_data:
+            if not sections:
                 return None
 
             # Compile all the extracted information into a dictionary
@@ -135,11 +135,16 @@ class HeaderExtractor:
                 'legal_body': legal_body,
                 'rechtsgebied': rechtsgebied,
                 'wetsverwijzing': wetsverwijzing,
-                'sections': section_data
+            }
+
+            section_data = {
+                'ecli': ecli,
+                'inhoud': inhoud,
+                'sections': sections
             }
 
             # Return the dictionary containing all the extracted data
-            return judgement_data
+            return judgement_data, section_data
 
     def process_xml_files_in_folder(self, folder_path: str) -> list:
         """
@@ -149,6 +154,7 @@ class HeaderExtractor:
         """
         # Initialize an empty list to store the extracted data from all files
         all_judgements = []
+        all_sections = []
         # Initialize a counter to keep track of the number of files processed
         file_counter = 0
 
@@ -164,16 +170,17 @@ class HeaderExtractor:
                 if file_counter % 10000 == 0:
                     logger.info(f"Processed {file_counter} files!")
                 # Process the XML file to extract judgement data
-                judgement_data = self.process_xml(file_path)
+                judgement_data, section_data = self.process_xml(file_path)
                 # If data is successfully extracted, add it to the list
                 if judgement_data:
                     all_judgements.append(judgement_data)
+                    all_sections.append(section_data)
                 else:
                     # Log a debug message if no valid data was extracted from the file
                     self.skip_counter += 1
 
         # Return the list containing the extracted data from all processed files
-        return all_judgements
+        return all_judgements, all_sections
 
     def extract_headers(self, input_path: str) -> pd.DataFrame or None:
         """
@@ -182,15 +189,15 @@ class HeaderExtractor:
         :return: Saves the resulting DataFrame  to a CSV file specified in the constants.
         """
         # Process all XML files in the specified folder and extract judgement data
-        all_judgements = self.process_xml_files_in_folder(input_path)
+        all_judgements, all_sections = self.process_xml_files_in_folder(input_path)
 
         logger.debug(f"Skipped {self.skip_counter}: No valid sections found for these files!")
 
         # Check if any judgement data was extracted
-        if all_judgements:
+        if all_judgements:    
             # Convert the list of extracted judgements into a DataFrame
             df = pd.DataFrame(all_judgements)
-            return df
+            return df, all_sections
         else:
             # Log an informational message if no valid judgement data was found
             logger.info("No valid judgements found in the XML files.")

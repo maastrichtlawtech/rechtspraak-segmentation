@@ -138,7 +138,7 @@ class SectionExtractor:
 
             # Compile all extracted information into a list
             judgement_list = [ecli, date, inhoud, legal_body, rechtsgebied, wetsverwijzing, procesverloop_text, overwegingen_text, beslissing_text]
-            return judgement_list
+        return judgement_list
 
 
     def process_files_in_parallel(self, files: list[str]) -> list[list[str]]:

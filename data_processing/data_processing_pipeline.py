@@ -1,4 +1,5 @@
 import os
+import json
 import argparse
 import pandas as pd
 from datetime import datetime
@@ -53,12 +54,13 @@ class DataProcessing:
                 extracted_df = self.full_text_extractor.extract_fulltext(input_path)
             case 2:
                 method_name = 'headers'
-                extracted_df = self.header_extractor.extract_headers(input_path)
+                extracted_df, extracted_dicts = self.header_extractor.extract_headers(input_path)
             case 3:
                 method_name = 'sections'
                 extracted_df = self.section_extractor.extract_sections(input_path)
 
         if extracted_df is not None and not extracted_df.empty:
+            ### SAVE METADATA
             # Generate the current timestamp TODO: change this naming to the year instead of datetime
             current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
             # Create the filename using the method name and the current time
@@ -68,6 +70,20 @@ class DataProcessing:
             # Save the DataFrame to the CSV file
             extracted_df.to_csv(file_path, index=False)
             logger.info(f"CSV with {method_name} saved to {file_path}!")
+
+            ### SAVE JSONS
+            os.makedirs(constants.JSON_FOLDERS_DIR, exist_ok=True)
+            for section_dict in extracted_dicts:
+                ecli_value = section_dict['ecli'].replace(':', '_')
+                filename = f"{ecli_value}.json"
+                # Define the full file path
+                filepath = os.path.join(constants.JSON_FOLDERS_DIR, filename)
+
+                # Save the dictionary as a JSON file
+                with open(filepath, "w", encoding="utf-8") as json_file:
+                    json.dump(section_dict, json_file, indent=4, ensure_ascii=False)
+
+            logger.info(f"Saved section JSONs at {constants.JSON_FOLDERS_DIR}")
         else:
             error_message = "Data extraction failed: the resulting DataFrame is empty or None."
             logger.error(error_message)
