@@ -1,5 +1,8 @@
 import ast
+import os
+import json
 import pandas as pd
+from utils import constants
 
 
 def safe_literal_eval(val: str) -> any:
@@ -42,3 +45,31 @@ def load_txt_file(file_path: str):
     # and replace double backslashes with a single backslash.
     split_patterns = [line.strip()[2:-1].replace('\\\\', '\\') for line in split_lines]
     return split_patterns
+
+def load_json(folder, filename: str):
+    """
+    Loads a JSON file from the specified directory.
+    
+    :param filename: The name of the JSON file to load (e.g., "ECLI_EU_C_2024_123.json").
+    :param directory: The folder where the JSON file is stored.
+    :return: The loaded dictionary from the JSON file.
+    """
+    # Construct the full file path
+    filepath = os.path.join(folder, filename)
+
+    # Check if the file exists
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(f"File '{filename}' not found in '{folder}'.")
+
+    # Open and read the JSON file
+    with open(filepath, "r", encoding="utf-8") as json_file:
+        data = json.load(json_file)
+
+    return data
+
+def save_json(data, folder, filename):
+    """Saves a dictionary as a JSON file."""
+    # Construct the full file path
+    filepath = os.path.join(folder, filename)
+    with open(filepath, "w", encoding="utf-8") as json_file:
+        json.dump(data, json_file, indent=4, ensure_ascii=False)

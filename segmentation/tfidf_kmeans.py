@@ -1,4 +1,6 @@
 import numpy as np
+import os
+import json
 import pandas as pd
 import matplotlib.pyplot as plt
 from segmentation import segmentation_eval
@@ -9,7 +11,7 @@ from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from tqdm import tqdm
 
-from utils import constants, logger_script
+from utils import constants, logger_script, load_json, save_json
 
 logger = logger_script.get_logger(constants.SEGMENTATION_LOGGER_NAME)
 
@@ -43,8 +45,12 @@ class TfidfKMeansClusterer:
         :return: A list of extracted headers in lowercase.
         """
         header_values = []
-        for nested_dict in df['sections']:
-            for key, value in nested_dict.items():
+        for ecli in df['ecli']:
+            ecli_value = ecli.replace(':', '_')
+            filepath = f"{ecli_value}.json"
+            os.makedirs(constants.JSON_FOLDERS_DIR, exist_ok=True)
+            section_json = load_json(constants.JSON_FOLDERS_DIR, filepath)
+            for key, value in section_json.items():
                 if key.isdigit():  # Check if the key is a number
                     header_values.append(value['header'].lower())
         return header_values
@@ -57,12 +63,30 @@ class TfidfKMeansClusterer:
         :param cluster_labels: The cluster labels to be added to the 'sections' column.
         :return: The updated DataFrame with the 'label' key added to each nested dictionary in the 'sections' column.
         """
-        for idx, nested_dict in enumerate(input_df['sections']):
-            for key in nested_dict:
+        # Ensure the output directory exists
+        os.makedirs(constants.SEGMENTATION_RESULTS_JSON_DIR, exist_ok=True)
+        
+        for idx, ecli in enumerate(input_df['ecli']):
+            # Convert ECLI to a valid filename
+            ecli_value = ecli.replace(':', '_')
+            filepath = f"{ecli_value}.json"
+            
+            # Load the corresponding JSON file
+            try:
+                section_json = load_json(constants.JSON_FOLDERS_DIR, filepath)
+            except FileNotFoundError:
+                print(f"Warning: File {filepath} not found. Skipping.")
+                continue
+            
+            # Update the sections with cluster labels
+            for key in section_json:
                 if key.isdigit():  # Check if the key is a number
-                    # Add the cluster label to the dictionary
-                    nested_dict[key]['label'] = int(cluster_labels[idx])
-        return input_df
+                    section_json[key]['label'] = int(cluster_labels[idx])
+            
+            # Save the updated JSON file to the output directory
+            save_json(section_json, constants.SEGMENTATION_RESULTS_JSON_DIR, filepath)
+        
+        print(f"Updated JSON files have been saved in '{constants.SEGMENTATION_RESULTS_JSON_DIR}'")
 
     @staticmethod
     def apply_kmeans(init_value: np.ndarray[int], tfidf_matrix: np.ndarray[int]) -> np.ndarray[int]:
@@ -100,7 +124,7 @@ class TfidfKMeansClusterer:
         plt.legend()
         plt.show()  # TODO: add save statement
 
-    def guided_kmeans_with_seed_words(self, input_df: pd.DataFrame, evaluate: bool, plot: bool) -> pd.DataFrame:
+    def guided_kmeans_with_seed_words(self, input_df: pd.DataFrame, evaluate: bool, plot: bool):
         """
         Applies K-Means clustering to the headers in the input DataFrame using seed words to guide the clustering.
         :param input_df: The input DataFrame containing the 'sections' column with nested dictionaries.
@@ -133,7 +157,7 @@ class TfidfKMeansClusterer:
 
         # Update the sections with cluster labels
         logger.info("Updating sections with cluster labels...")
-        result_df = self.update_sections_with_labels(input_df, cluster_labels)
+        self.update_sections_with_labels(input_df, cluster_labels)
 
         if evaluate:
             # Evaluate the quality of the clustering
@@ -151,13 +175,12 @@ class TfidfKMeansClusterer:
             logger.info("Generating the cluster plot...")
             self.generate_tfidf_kmeans_scatter_plot(tfidf_matrix, cluster_labels)
 
-        return result_df
 
     def guided_kmeans_with_labeled(self,
                                    input_df: pd.DataFrame,
                                    labeled_df: pd.DataFrame,
                                    evaluate: bool,
-                                   plot: bool) -> pd.DataFrame:
+                                   plot: bool):
         """
         Applies K-Means clustering to the headers in the input DataFrame using refined TF-IDF vectors
         derived from labeled data.
@@ -227,7 +250,7 @@ class TfidfKMeansClusterer:
 
         # Update the sections with cluster labels
         logger.info("Updating sections with cluster labels...")
-        result_df = self.update_sections_with_labels(input_df, cluster_labels)
+        self.update_sections_with_labels(input_df, cluster_labels)
 
         if evaluate:
             # Evaluate the quality of the clustering
@@ -265,5 +288,3 @@ class TfidfKMeansClusterer:
         if plot:
             logger.info("Generating the cluster plot...")
             self.generate_tfidf_kmeans_scatter_plot(tfidf_matrix, cluster_labels)
-
-        return result_df

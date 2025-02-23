@@ -78,7 +78,7 @@ class DataProcessing:
                 filename = f"{ecli_value}.json"
                 # Define the full file path
                 filepath = os.path.join(constants.JSON_FOLDERS_DIR, filename)
-
+        
                 # Save the dictionary as a JSON file
                 with open(filepath, "w", encoding="utf-8") as json_file:
                     json.dump(section_dict, json_file, indent=4, ensure_ascii=False)
