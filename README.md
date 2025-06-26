@@ -1,4 +1,4 @@
-## Data
+## Data in use
 For this project data from Rechtspraak Open Data is used.
 
 ### Data directory setup
